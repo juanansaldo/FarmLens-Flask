@@ -5,7 +5,7 @@ A virtual environment is necessary to run this project. To create a virtual envi
 python -m venv <environment_name>
 
 To activate environment:
-MacOS: source <environment_name>/bin/activate
+MacOS: source <environment_name>/bin/activate <br>
 Windows: .\<environment_name>\Scripts\activate
 
 Once the environment is activated, install the packages.
