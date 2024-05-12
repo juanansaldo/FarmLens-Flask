@@ -6,7 +6,7 @@ python -m venv <environment_name>
 
 To activate environment: <br>
 MacOS: source <environment_name>/bin/activate <br>
-Windows: .\<environment_name>\Scripts\activate
+Windows: .\\<environment_name>\Scripts\activate
 
 Once the environment is activated, install the packages. <br>
 pip install -r requirements.txt
