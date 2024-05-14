@@ -11,5 +11,5 @@ Windows: .\\<environment_name>\Scripts\activate
 Once the environment is activated, install the packages. <br>
 pip install -r requirements.txt
 
-[FarmLens-ML repo](https://github.com/juanansaldo/FarmLens-ML)
+[FarmLens-ML repo](https://github.com/juanansaldo/FarmLens-ML) <br>
 [FarmLens-Unity repo](https://github.com/novicecodersnail/farmlens)
