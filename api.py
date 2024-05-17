@@ -7,6 +7,9 @@ import os
 from inference.core.interfaces.stream.sinks import VideoFileSink
 from inference import InferencePipeline
 
+import warnings
+warnings.filterwarnings("ignore")
+
 app = Flask(__name__)
 executor = Executor(app)
 
@@ -59,6 +62,15 @@ def upload_video():
         processed_filepath = os.path.join(app.config['UPLOAD_FOLDER'], "processed.mp4")
         file.save(filepath)
 
+        output_filepath = os.path.join(app.config['PROCESSED_FOLDER'], "output.avi")
+
+        if os.path.isfile(output_filepath):
+            try:
+                os.remove(output_filepath)
+                print(f"File {output_filepath} removed successfully.")
+            except Exception as e:
+                print(f"Error removing file {output_filepath}: {e}")
+
         resize_and_change_framerate(filepath, processed_filepath)
 
         executor.submit(process_video, processed_filepath)  # Process video asynchronously
@@ -89,20 +101,19 @@ def download_video(filename):
     upload_filepath = os.path.join(app.config['UPLOAD_FOLDER'], "capture.mp4")
     processed_filepath = os.path.join(app.config['UPLOAD_FOLDER'], "processed.mp4")
 
+    @after_this_request
+    def remove_file(response):
+        try:
+            os.remove(upload_filepath)
+            os.remove(processed_filepath)
+        except Exception as error:
+            app.logger.error("Error removing files", exc_info=error)
+        return response
+
     if os.path.isfile(output_filepath):
-        @after_this_request
-        def remove_file(response):
-            try:
-                os.remove(upload_filepath)
-                os.remove(processed_filepath)
-                time.sleep(10)
-                os.remove(output_filepath)
-            except Exception as error:
-                app.logger.error("Error removing file %s", output_filepath, exc_info=error)
-            return response
         return send_from_directory(app.config['PROCESSED_FOLDER'], filename, as_attachment=True)
     else:
         return abort(404, description="File not found")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8000)))
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
