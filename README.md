@@ -29,7 +29,7 @@ $env:ROBOFLOW_MODEL_ID="{MODEL_ID}" <br>
 
 3. Run the flask app <br>
 - flask run <br>
-- flask run --host=0.0.0.0 (Optional. Accepts requests from your entire network)
+- flask run --host=0.0.0.0 --port=5000 (Optional. Accepts requests from your entire network)
 
 [FarmLens-ML repo](https://github.com/juanansaldo/FarmLens-ML) <br>
 [FarmLens-Unity repo](https://github.com/novicecodersnail/farmlens)
